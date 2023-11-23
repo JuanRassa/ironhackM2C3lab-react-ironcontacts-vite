@@ -9,25 +9,50 @@ function App() {
   const [displayContacts, setdisplayContacts] = useState(contactsData.slice(0, spliceIndex));
   const [remainingContacts, setRemainingContacts] = useState(contactsData.slice(spliceIndex, contactsData.lenght));
 
-  const addRandomContact = () => {
-    const randomIndex = Math.floor(Math.random() * remainingContacts.length + 0);
-    // console.log(remainingContacts[randomIndex]);
-    setdisplayContacts([...displayContacts, remainingContacts[randomIndex]]);
-    setRemainingContacts(remainingContacts.filter(contactToRemove => contactToRemove.id !== remainingContacts[randomIndex].id));
-    console.log('displayContacts -> ', displayContacts);
-    console.log('remainingContacts ->', remainingContacts);
+  const addRandomContact = e => {
+    if (remainingContacts.length === 0) return (e.target.style.pointerEvents = 'none');
+    else {
+      const randomIndex = Math.floor(Math.random() * remainingContacts.length + 0);
+      setdisplayContacts([...displayContacts, remainingContacts[randomIndex]]);
+      setRemainingContacts(remainingContacts.filter(contactToRemove => contactToRemove.id !== remainingContacts[randomIndex].id));
+    }
+  };
+
+  const sortBy = by => {
+    const tempArr = [...displayContacts];
+    if (by === 'popularity') {
+      setdisplayContacts(tempArr.sort((a, b) => a.popularity - b.popularity));
+    }
+    if (by === 'name') {
+      setdisplayContacts(tempArr.sort((a, b) => a.name.localeCompare(b.name)));
+    }
   };
 
   return (
     <div className='App'>
       <h1>LAB | React IronContacts</h1>
+
       <button
         onClick={e => {
-          if (remainingContacts.length === 0) return (e.target.style.pointerEvents = 'none');
-          addRandomContact();
+          addRandomContact(e);
         }}>
         {remainingContacts.length === 0 ? 'No more contacts to add' : 'Add Random Contact'}
       </button>
+
+      <button
+        onClick={() => {
+          sortBy('popularity');
+        }}>
+        Sort by Popularity
+      </button>
+
+      <button
+        onClick={() => {
+          sortBy('name');
+        }}>
+        Sort by Name
+      </button>
+
       <table>
         <thead>
           <tr>

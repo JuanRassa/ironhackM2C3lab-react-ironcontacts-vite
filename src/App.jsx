@@ -36,26 +36,28 @@ function App() {
     <div className='App'>
       <h1>LAB | React IronContacts</h1>
 
-      <button
-        onClick={e => {
-          addRandomContact(e);
-        }}>
-        {remainingContacts.length === 0 ? 'No more contacts to add' : 'Add Random Contact'}
-      </button>
+      <div className='btns'>
+        <button
+          onClick={e => {
+            addRandomContact(e);
+          }}>
+          {remainingContacts.length === 0 ? 'No more contacts to add' : 'Add Random Contact'}
+        </button>
 
-      <button
-        onClick={() => {
-          sortBy('popularity');
-        }}>
-        Sort by Popularity
-      </button>
+        <button
+          onClick={() => {
+            sortBy('popularity');
+          }}>
+          Sort by Popularity
+        </button>
 
-      <button
-        onClick={() => {
-          sortBy('name');
-        }}>
-        Sort by Name
-      </button>
+        <button
+          onClick={() => {
+            sortBy('name');
+          }}>
+          Sort by Name
+        </button>
+      </div>
 
       <table>
         <thead>

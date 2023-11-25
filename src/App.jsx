@@ -21,11 +21,15 @@ function App() {
   const sortBy = by => {
     const tempArr = [...displayContacts];
     if (by === 'popularity') {
-      setdisplayContacts(tempArr.sort((a, b) => a.popularity - b.popularity));
+      setdisplayContacts(tempArr.sort((a, b) => b.popularity - a.popularity));
     }
     if (by === 'name') {
       setdisplayContacts(tempArr.sort((a, b) => a.name.localeCompare(b.name)));
     }
+  };
+
+  const removeContact = contactId => {
+    setdisplayContacts(displayContacts.filter(contact => contact.id !== contactId));
   };
 
   return (
@@ -61,6 +65,7 @@ function App() {
             <td>Popularity</td>
             <td>Won an Oscar</td>
             <td>Won an Emmy</td>
+            <td>Actions</td>
           </tr>
         </thead>
         <tbody>
@@ -74,6 +79,14 @@ function App() {
                 <td>{contact.popularity}</td>
                 <td>{contact.wonOscar && '🏆'}</td>
                 <td>{contact.wonEmmy && '🌟'}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      removeContact(contact.id);
+                    }}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             );
           })}
